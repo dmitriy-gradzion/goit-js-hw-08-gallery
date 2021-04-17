@@ -25,7 +25,7 @@ function createGallery(gallery) {
         </a>
         </li>`;
     }).join('');
-}
+};
 
 refs.gallery.addEventListener('click', onPicsOpen);
 
@@ -35,4 +35,12 @@ function onPicsOpen(e) {
     }
     e.preventDefault();
     refs.lightbox.classList.add("is-open");
-}
+};
+
+refs.lightboxCloseBtn.addEventListener("click", onClickClose);
+
+function onClickClose() {
+    refs.lightbox.classList.remove("is-open");
+    refs.lightboxImg.src = "";
+    refs.lightboxImg.alt = "";
+};

@@ -1,14 +1,12 @@
 import gallery from './gallery-items.js';
 
-const refs = {
-  gallery: document.querySelector('.js-gallery'),
-  lightbox: document.querySelector('.js-lightbox'),
-  lightboxImg: document.querySelector('.lightbox__image'),
-  lightboxCloseBtn: document.querySelector('button[data-action="close-lightbox"]'),
-};
+const pics = document.querySelector('.js-gallery');
+const lightbox = document.querySelector('.js-lightbox');
+const lightboxImg = document.querySelector('.lightbox__image');
+const lightboxCloseBtn = document.querySelector('button[data-action="close-lightbox"]');
 
 const markupGallery = createGallery(gallery);
-refs.gallery.insertAdjacentHTML('beforeend', markupGallery);
+pics.insertAdjacentHTML('beforeend', markupGallery);
 
 function createGallery(gallery) {
   return gallery.map(({ preview, original, description }) => {
@@ -27,20 +25,24 @@ function createGallery(gallery) {
     }).join('');
 };
 
-refs.gallery.addEventListener('click', onPicsOpen);
+pics.addEventListener('click', onPicsOpen);
 
 function onPicsOpen(e) {
     if (!e.target.classList.contains('gallery__image')) {
         return;
     }
     e.preventDefault();
-    refs.lightbox.classList.add("is-open");
+
+    const origPicsUrl = e.target.dataset.source;
+    e.target.classList.add('current')
+    lightbox.classList.add("is-open");  
+    lightboxImg.src = origPicsUrl;  
 };
 
-refs.lightboxCloseBtn.addEventListener("click", onClickClose);
+lightboxCloseBtn.addEventListener("click", onClickClose);
 
 function onClickClose() {
-    refs.lightbox.classList.remove("is-open");
-    refs.lightboxImg.src = "";
-    refs.lightboxImg.alt = "";
+    lightbox.classList.remove("is-open");
+    lightboxImg.src = "";
+    lightboxImg.alt = "";
 };

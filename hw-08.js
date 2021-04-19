@@ -3,6 +3,7 @@ import gallery from './gallery-items.js';
 const pics = document.querySelector('.js-gallery');
 const lightbox = document.querySelector('.js-lightbox');
 const lightboxImg = document.querySelector('.lightbox__image');
+const boxOverley = document.querySelector('.lightbox__overlay');
 const lightboxCloseBtn = document.querySelector('button[data-action="close-lightbox"]');
 
 const markupGallery = createGallery(gallery);
@@ -34,11 +35,11 @@ function onPicsOpen(e) {
     e.preventDefault();
 
     const origPicsUrl = e.target.dataset.source;
-    e.target.classList.add('current')
     lightbox.classList.add("is-open");  
     lightboxImg.src = origPicsUrl;  
 };
 
+boxOverley.addEventListener("click", onClickClose);
 lightboxCloseBtn.addEventListener("click", onClickClose);
 
 function onClickClose() {
@@ -46,3 +47,13 @@ function onClickClose() {
     lightboxImg.src = "";
     lightboxImg.alt = "";
 };
+
+window.addEventListener('keydown', onEscPress);
+
+function onEscPress(e) {
+  if (e.code !== 'Escape') {
+    return
+  }
+  lightbox.classList.remove("is-open");
+}
+
